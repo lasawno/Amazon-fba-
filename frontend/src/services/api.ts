@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { DashboardMetrics, Order, InventoryItem, SalesData } from '@/types';
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL || '/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -44,11 +44,6 @@ export const dashboardAPI = {
 
   getSalesHistory: async (days: number = 30): Promise<SalesData[]> => {
     const response = await api.get(`/sales/history?days=${days}`);
-    return response.data;
-  },
-
-  health: async (): Promise<{ status: string }> => {
-    const response = await api.get('/health');
     return response.data;
   },
 };
